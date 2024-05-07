@@ -6,8 +6,12 @@ if [ ! -n "$1" ]; then
 	exit 0
 fi
 
+make all-ignore-cpu
+
 mkdir -p ./$1
-nsys profile -o $1/single-nostream single-nostream
-nsys profile -o $1/single-stream single-stream
-nsys profile -o $1/multi-nostream multi-nostream
-nsys profile -o $1/multi-stream multi-stream
+nsys profile --gpu-metrics-device all -o $1/single-nostream single-nostream
+nsys profile --gpu-metrics-device all -o $1/single-stream single-stream
+nsys profile --gpu-metrics-device all -o $1/multi-nostream multi-nostream
+nsys profile --gpu-metrics-device all -o $1/multi-stream multi-stream
+
+make clean
